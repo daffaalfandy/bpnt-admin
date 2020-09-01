@@ -1,0 +1,22 @@
+// Import font
+@font-face {
+    font-family: "Source Sans Pro", sans-serif;
+    src: url("./assets/fonts/Source_Sans_Pro/SourceSansPro-Bold.ttf"),
+        url("./assets/fonts/Source_Sans_Pro/SourceSansPro-Italic.ttf"),
+        url("./assets/fonts/Source_Sans_Pro/SourceSansPro-Light.ttf"),
+        url("./assets/fonts/Source_Sans_Pro/SourceSansPro-Regular.ttf");
+}
+
+// Import admin-lte
+@import "~bootstrap/scss/bootstrap";
+@import "~admin-lte/dist/css/adminlte.css";
+@import "~admin-lte/plugins/fontawesome-free/css/all.css";
+
+// Variable
+$source-sans-pro: "Source Sans Pro",
+sans-serif;
+
+body {
+    font-family: $source-sans-pro;
+    background-color: whitesmoke;
+}
