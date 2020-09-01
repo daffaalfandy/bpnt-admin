@@ -18,5 +18,25 @@ sans-serif;
 
 body {
     font-family: $source-sans-pro;
+    font-weight: 400;
     background-color: whitesmoke;
+    min-height: 100vh !important;
+}
+
+// Transaction
+#start-form {
+    @extend .text-center;
+    @extend .form-inline;
+    display: block;
+
+    label {
+        margin-bottom: 2rem;
+        margin-top: 5rem;
+    }
+
+    input {
+        @extend .col-1;
+        max-width: 6em;
+        margin-right: 0.5em;
+    }
 }
