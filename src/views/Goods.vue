@@ -48,11 +48,11 @@
                 <td>{{ good.buyPrice }}</td>
                 <td>{{ good.sellPrice }}</td>
                 <td>
-                  <a @click.prevent="editGoods(good._id)">
+                  <a @click.prevent="onEditGoods(good)">
                     <span class="fas fa-edit text-blue"></span>
                   </a>
                   &nbsp; &nbsp; &nbsp; / &nbsp; &nbsp; &nbsp;
-                  <a @click.prevent="deleteGoodsBtn(good._id)">
+                  <a @click.prevent="onDeleteGoods(good._id)">
                     <span class="fas fa-trash-alt text-red"></span>
                   </a>
                 </td>
@@ -69,6 +69,94 @@
         </div>
       </div>
     </div>
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              {{ isEdit ? "Edit Data Barang" : "Tambah Data Barang" }}
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form>
+            <div class="modal-body text-center">
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  required
+                  placeholder="Nama Barang"
+                  v-model="good.name"
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="number"
+                  class="form-control"
+                  placeholder="Stok Barang"
+                  v-model="good.stock"
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Unit Barang"
+                  v-model="good.unit"
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="number"
+                  class="form-control"
+                  placeholder="Harga Beli"
+                  v-model="good.buyPrice"
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="number"
+                  class="form-control"
+                  placeholder="Harga Jual"
+                  v-model="good.sellPrice"
+                />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                @click.prevent="addNewKpm"
+              >
+                {{ isEdit ? "Simpan" : "Tambah" }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- End Modal -->
   </div>
 </template>
 
@@ -93,18 +181,34 @@ const months = [
 export default {
   data() {
     return {
+      isEdit: false,
       month: this.getMonth(),
       year: date.getFullYear().toString(),
+      good: {
+        name: "",
+        stock: "",
+        unit: "",
+        buyPrice: 0,
+        sellPrice: 0,
+      },
     };
   },
-  /*global Swal*/
+  /*global Swal, $*/
   /*eslint no-undef: "error"*/
   methods: {
     ...mapActions(["addGoods", "fetchGoods", "deleteGoods"]),
-    editGoods(id) {
-      console.log(id);
+    onEditGoods(good) {
+      this.isEdit = true;
+
+      this.good.name = good.name;
+      this.good.stock = good.stock;
+      this.good.unit = good.unit;
+      this.good.buyPrice = good.buyPrice;
+      this.good.sellPrice = good.sellPrice;
+
+      $("#exampleModal").modal("show");
     },
-    async deleteGoodsBtn(id) {
+    async onDeleteGoods(id) {
       Swal.fire({
         title: "Apakah Anda yakin?",
         text: "Anda tidak akan dapat mengulang ini!",
