@@ -9,9 +9,18 @@
             <div class="col-6 mx-auto">
               <div class="form-inline">
                 <div class="form-group">
-                  <label for="datepick" style="font-weight: 400">Pilih Tanggal:</label>
-                  <input v-model="datepick" type="date" class="form-control ml-5" id="datepick" />
-                  <div class="invalid-feedback mb-0" id="invalid-date">Silahkan pilih tanggal.</div>
+                  <label for="datepick" style="font-weight: 400"
+                    >Pilih Tanggal:</label
+                  >
+                  <input
+                    v-model="datepick"
+                    type="date"
+                    class="form-control ml-5"
+                    id="datepick"
+                  />
+                  <div class="invalid-feedback mb-0" id="invalid-date">
+                    Silahkan pilih tanggal.
+                  </div>
                 </div>
               </div>
             </div>
@@ -19,7 +28,9 @@
           <div class="row">
             <div class="col-10 mx-auto">
               <div id="start-form">
-                <label style="font-weight: 400" for="kks-number">Masukkan nomor KKS:</label>
+                <label style="font-weight: 400" for="kks-number"
+                  >Masukkan nomor KKS:</label
+                >
                 <div id="start-form"></div>
                 <input
                   disabled
@@ -57,14 +68,18 @@
                   v-model="kks4"
                 />
               </div>
-              <div class="invalid-feedback mb-0" id="invalid-kks">Masukkan nomor KKS dengan benar.</div>
+              <div class="invalid-feedback mb-0" id="invalid-kks">
+                Masukkan nomor KKS dengan benar.
+              </div>
             </div>
             <div class="container text-center mt-4">
               <button
                 id="btn-main"
                 class="btn btn-primary px-4 mb-5"
                 @click.prevent="startPeriode"
-              >Mulai</button>
+              >
+                Mulai
+              </button>
             </div>
           </div>
         </form>
@@ -83,18 +98,47 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Tambah Data KPM</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <form>
             <div class="modal-body text-center">
               <div class="form-inline mb-3" id="start-form">
-                <input disabled type="text" maxlength="4" class="form-control" v-model="kks1" />
+                <input
+                  disabled
+                  type="text"
+                  maxlength="4"
+                  class="form-control"
+                  v-model="kks1"
+                />
 
-                <input disabled type="text" maxlength="4" class="form-control" v-model="kks2" />
-                <input disabled type="text" maxlength="4" class="form-control" v-model="kks3" />
-                <input disabled type="text" maxlength="4" class="form-control" v-model="kks4" />
+                <input
+                  disabled
+                  type="text"
+                  maxlength="4"
+                  class="form-control"
+                  v-model="kks2"
+                />
+                <input
+                  disabled
+                  type="text"
+                  maxlength="4"
+                  class="form-control"
+                  v-model="kks3"
+                />
+                <input
+                  disabled
+                  type="text"
+                  maxlength="4"
+                  class="form-control"
+                  v-model="kks4"
+                />
               </div>
               <div class="form-group">
                 <input
@@ -138,8 +182,20 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary" @click.prevent="addNewKpm">Tambah</button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                @click.prevent="addNewKpm"
+              >
+                Tambah
+              </button>
             </div>
           </form>
         </div>
@@ -150,13 +206,14 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex"; //eslint-disable-line no-undef
+import { kks1, kks2 } from "../../config/config";
 
 export default {
   data() {
     return {
       datepick: "",
-      kks1: "1946",
-      kks2: "9000",
+      kks1: kks1,
+      kks2: kks2,
       kks3: "",
       kks4: "",
       kpmData: {

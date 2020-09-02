@@ -1,6 +1,9 @@
 import axios from 'axios'
+import {
+    API_LOCATION
+} from '../../../config/config';
 
-const url = 'http://localhost:5000/api/kpm';
+const url = `${API_LOCATION}/kpm`;
 
 const state = {
     kpm: []
