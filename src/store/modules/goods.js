@@ -31,10 +31,22 @@ const actions = {
 
     commit("deleteGoods", payload);
   },
+
+  async updateGood({ commit }, payload) {
+    await axios.put(`${url}/${payload._id}`, payload);
+
+    commit("updateGood", payload);
+  },
 };
 
 const mutations = {
-  addGoods: (state, payload) => state.goods.unshift(payload),
+  addGoods: (state, payload) => state.goods.goods.unshift(payload.goods),
+  updateGood: (state, payload) => {
+    const index = state.goods.goods.findIndex(
+      (good) => good._id == payload._id
+    );
+    state.goods.goods.splice(index, 1, payload);
+  },
   setGoods: (state, payload) => (state.goods = payload),
   deleteGoods: (state, payload) => {
     const index = state.goods.goods.findIndex(

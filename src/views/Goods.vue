@@ -48,7 +48,7 @@
                 <td>{{ good.buyPrice }}</td>
                 <td>{{ good.sellPrice }}</td>
                 <td>
-                  <a @click.prevent="onEditGoods(good)">
+                  <a @click.prevent="onClickEdit(good)">
                     <span class="fas fa-edit text-blue"></span>
                   </a>
                   &nbsp; &nbsp; &nbsp; / &nbsp; &nbsp; &nbsp;
@@ -62,7 +62,11 @@
         </div>
         <div class="container">
           <div class="float-right mt-4">
-            <button id="btn-add-item" class="btn btn-primary">
+            <button
+              id="btn-add-item"
+              class="btn btn-primary"
+              @click.prevent="onClickAdd"
+            >
               Tambahkan Barang
             </button>
           </div>
@@ -147,7 +151,7 @@
               <button
                 type="submit"
                 class="btn btn-primary"
-                @click.prevent="addNewKpm"
+                @click.prevent="isEdit ? onEditGood() : onCreateGood()"
               >
                 {{ isEdit ? "Simpan" : "Tambah" }}
               </button>
@@ -185,6 +189,7 @@ export default {
       month: this.getMonth(),
       year: date.getFullYear().toString(),
       good: {
+        _id: "",
         name: "",
         stock: "",
         unit: "",
@@ -196,10 +201,42 @@ export default {
   /*global Swal, $*/
   /*eslint no-undef: "error"*/
   methods: {
-    ...mapActions(["addGoods", "fetchGoods", "deleteGoods"]),
-    onEditGoods(good) {
+    ...mapActions(["addGoods", "fetchGoods", "deleteGoods", "updateGood"]),
+    onEditGood() {
+      this.updateGood(this.good).then(() => {
+        $("#exampleModal").modal("hide");
+      });
+    },
+    onCreateGood() {
+      let payload = {
+        name: this.good.name,
+        unit: this.good.unit,
+        stock: this.good.stock,
+        buyPrice: this.good.buyPrice,
+        sellPrice: this.good.sellPrice,
+        month: this.month,
+        year: this.year,
+      };
+
+      this.addGoods(payload).then(() => {
+        $("#exampleModal").modal("hide");
+      });
+    },
+    onClickAdd() {
+      this.isEdit = false;
+
+      this.good.name = "";
+      this.good.stock = "";
+      this.good.unit = "";
+      this.good.buyPrice = "";
+      this.good.sellPrice = "";
+
+      $("#exampleModal").modal("show");
+    },
+    onClickEdit(good) {
       this.isEdit = true;
 
+      this.good._id = good._id;
       this.good.name = good.name;
       this.good.stock = good.stock;
       this.good.unit = good.unit;
@@ -228,6 +265,7 @@ export default {
     },
     async getGoods() {
       await this.fetchGoods({ month: this.month, year: this.year });
+      document.getElementById("btn-add-item").disabled = false;
     },
     getMonth() {
       const currentMonthNumber = date.getMonth();
@@ -245,6 +283,7 @@ export default {
   },
   mounted() {
     this.inventoryLoad();
+    document.getElementById("btn-add-item").disabled = true;
   },
   computed: mapGetters(["allGoods"]),
 };
