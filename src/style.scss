@@ -23,6 +23,28 @@ body {
     min-height: 100vh !important;
 }
 
+.main-form {
+    @extend .justify-content-center;
+    @extend .form-inline;
+    margin-bottom: 2rem;
+
+    input {
+        margin: 0 2rem 0 1rem;
+    }
+}
+
+.main-table {
+    @extend .table;
+    font-family: $source-sans-pro;
+    margin-top: 2rem;
+    text-align: center;
+
+    td {
+        vertical-align: middle;
+        border: none;
+    }
+}
+
 // Transaction
 #start-form {
     @extend .text-center;

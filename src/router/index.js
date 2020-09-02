@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Transaction from '../views/Transaction.vue'
 import InputKpm from '../views/InputKpm'
+import Goods from '../views/Goods'
 
 window.Vue = Vue
 
@@ -16,6 +17,11 @@ const routes = [{
     path: '/input-kpm',
     name: 'Input KPM',
     component: InputKpm
+  },
+  {
+    path: '/goods',
+    name: "Goods",
+    component: Goods
   }
 ]
 
