@@ -5,22 +5,13 @@
       <div class="card-body">
         <div class="text-center h4 mt-4">Periode BPNT</div>
         <form>
-          <div class="row mt-5 ">
+          <div class="row mt-5">
             <div class="col-6 mx-auto">
               <div class="form-inline">
                 <div class="form-group">
-                  <label for="datepick" style="font-weight: 400"
-                    >Pilih Tanggal:
-                  </label>
-                  <input
-                    v-model="datepick"
-                    type="date"
-                    class="form-control ml-5"
-                    id="datepick"
-                  />
-                  <div class="invalid-feedback mb-0" id="invalid-date">
-                    Silahkan pilih tanggal.
-                  </div>
+                  <label for="datepick" style="font-weight: 400">Pilih Tanggal:</label>
+                  <input v-model="datepick" type="date" class="form-control ml-5" id="datepick" />
+                  <div class="invalid-feedback mb-0" id="invalid-date">Silahkan pilih tanggal.</div>
                 </div>
               </div>
             </div>
@@ -28,9 +19,7 @@
           <div class="row">
             <div class="col-10 mx-auto">
               <div id="start-form">
-                <label style="font-weight: 400" for="kks-number"
-                  >Masukkan nomor KKS:</label
-                >
+                <label style="font-weight: 400" for="kks-number">Masukkan nomor KKS:</label>
                 <div id="start-form"></div>
                 <input
                   disabled
@@ -68,18 +57,14 @@
                   v-model="kks4"
                 />
               </div>
-              <div class="invalid-feedback mb-0" id="invalid-kks">
-                Masukkan nomor KKS dengan benar.
-              </div>
+              <div class="invalid-feedback mb-0" id="invalid-kks">Masukkan nomor KKS dengan benar.</div>
             </div>
             <div class="container text-center mt-4">
               <button
                 id="btn-main"
                 class="btn btn-primary px-4 mb-5"
                 @click.prevent="startPeriode"
-              >
-                Mulai
-              </button>
+              >Mulai</button>
             </div>
           </div>
         </form>
@@ -97,55 +82,21 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">
-              Tambah Data KPM
-            </h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
+            <h5 class="modal-title" id="exampleModalLabel">Tambah Data KPM</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <form>
             <div class="modal-body text-center">
               <div class="form-inline mb-3" id="start-form">
-                <input
-                  disabled
-                  type="text"
-                  maxlength="4"
-                  class="form-control"
-                  v-model="kks1"
-                />
+                <input disabled type="text" maxlength="4" class="form-control" v-model="kks1" />
 
-                <input
-                  disabled
-                  type="text"
-                  maxlength="4"
-                  class="form-control"
-                  v-model="kks2"
-                />
-                <input
-                  disabled
-                  type="text"
-                  maxlength="4"
-                  class="form-control"
-                  v-model="kks3"
-                />
-                <input
-                  disabled
-                  type="text"
-                  maxlength="4"
-                  class="form-control"
-                  v-model="kks4"
-                />
+                <input disabled type="text" maxlength="4" class="form-control" v-model="kks2" />
+                <input disabled type="text" maxlength="4" class="form-control" v-model="kks3" />
+                <input disabled type="text" maxlength="4" class="form-control" v-model="kks4" />
               </div>
-              <div
-                class="form-group"
-                :class="{ 'form-group--error': $v.name.$error }"
-              >
+              <div class="form-group">
                 <input
                   required
                   autofocus
@@ -160,7 +111,7 @@
                   type="text"
                   class="form-control mr-4"
                   placeholder="Dusun KPM"
-                  v-model="kpmData.dusun"
+                  v-model="kpmData.hamlet"
                 />
                 <input
                   type="text"
@@ -174,7 +125,7 @@
                   type="text"
                   class="form-control"
                   placeholder="Desa KPM"
-                  v-model="kpmData.desa"
+                  v-model="kpmData.village"
                 />
               </div>
               <div class="form-group">
@@ -182,25 +133,13 @@
                   type="text"
                   class="form-control"
                   placeholder="Kecamatan KPM"
-                  v-model="kpmData.kecamatan"
+                  v-model="kpmData.subDistrict"
                 />
               </div>
             </div>
             <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-dismiss="modal"
-              >
-                Close
-              </button>
-              <button
-                type="submit"
-                class="btn btn-primary"
-                @click.prevent="addNewKpm"
-              >
-                Tambah
-              </button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary" @click.prevent="addNewKpm">Tambah</button>
             </div>
           </form>
         </div>
@@ -210,6 +149,8 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex"; //eslint-disable-line no-undef
+
 export default {
   data() {
     return {
@@ -219,18 +160,20 @@ export default {
       kks3: "",
       kks4: "",
       kpmData: {
+        kks: "",
         name: "",
-        dusun: "",
+        hamlet: "",
         rt: "",
-        desa: "",
-        kecamatan: "",
+        village: "",
+        subDistrict: "",
       },
     };
   },
   methods: {
-    addNewKpm() {
+    ...mapActions(["addKpm", "fetchOneKpm"]),
+    async addNewKpm() {
+      await this.addKpm(this.kpmData);
       $("#exampleModal").modal("hide"); //eslint-disable-line no-undef
-      console.log("add new kpm");
     },
     checkValidation() {
       if (this.datepick === "") {
@@ -244,14 +187,20 @@ export default {
         return false;
       } else {
         document.getElementById("invalid-kks").style.display = "none";
+        this.kpmData.kks = this.kks1 + this.kks2 + this.kks3 + this.kks4;
       }
 
       return true;
     },
-    startPeriode() {
+    async startPeriode() {
       if (this.checkValidation()) {
         // Add condition from backend here
-        $("#exampleModal").modal("show"); //eslint-disable-line no-undef
+        await this.fetchOneKpm({ kks: this.kpmData.kks });
+        if (this.getKpm.kpm.length === 0) {
+          $("#exampleModal").modal("show"); //eslint-disable-line no-undef
+        } else {
+          console.log("terdaftar");
+        }
         // this.$router.push("/input-kpm");
       }
     },
@@ -301,5 +250,6 @@ export default {
   mounted() {
     this.watchKKSEvent();
   },
+  computed: mapGetters(["getKpm"]),
 };
 </script>
