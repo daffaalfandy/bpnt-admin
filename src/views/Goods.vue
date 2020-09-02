@@ -11,6 +11,7 @@
               id="month-period"
               class="form-control"
               style="max-width: 150px"
+              v-model="month"
             />
             <datalist id="month-list"></datalist>
             <label for="year-period">Tahun:</label>
@@ -19,9 +20,10 @@
               id="year-period"
               class="form-control"
               style="max-width: 75px"
+              v-model="year"
             />
             <datalist id="year-list"></datalist>
-            <button class="btn btn-primary px-4" id="btn-inventory-start">
+            <button class="btn btn-primary px-4" @click.prevent="getGoods">
               Mulai
             </button>
           </div>
@@ -30,7 +32,7 @@
           <table class="main-table">
             <thead>
               <tr>
-                <th>Nomor</th>
+                <th>No</th>
                 <th>Nama Barang</th>
                 <th>Stok Barang</th>
                 <th>Harga Beli</th>
@@ -38,7 +40,24 @@
                 <th>Aksi</th>
               </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+              <tr v-for="(good, index) in allGoods.goods" :key="good._id">
+                <td>{{ index + 1 }}</td>
+                <td>{{ good.name }}</td>
+                <td>{{ good.stock }} {{ good.unit }}</td>
+                <td>{{ good.buyPrice }}</td>
+                <td>{{ good.sellPrice }}</td>
+                <td>
+                  <a @click.prevent="editGoods(good._id)">
+                    <span class="fas fa-edit text-blue"></span>
+                  </a>
+                  &nbsp; &nbsp; &nbsp; / &nbsp; &nbsp; &nbsp;
+                  <a @click.prevent="deleteGoodsBtn(good._id)">
+                    <span class="fas fa-trash-alt text-red"></span>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
         <div class="container">
@@ -54,36 +73,64 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex"; //eslint-disable-line no-undef
+const date = new Date();
+const months = [
+  "Januari",
+  "Februari",
+  "Maret",
+  "April",
+  "Mei",
+  "Juni",
+  "Juli",
+  "Agustus",
+  "September",
+  "Oktober",
+  "November",
+  "Desember",
+];
+
 export default {
+  data() {
+    return {
+      month: this.getMonth(),
+      year: date.getFullYear().toString(),
+    };
+  },
+  /*global Swal*/
+  /*eslint no-undef: "error"*/
   methods: {
-    inventoryLoad() {
-      const date = new Date();
+    ...mapActions(["addGoods", "fetchGoods", "deleteGoods"]),
+    editGoods(id) {
+      console.log(id);
+    },
+    async deleteGoodsBtn(id) {
+      Swal.fire({
+        title: "Apakah Anda yakin?",
+        text: "Anda tidak akan dapat mengulang ini!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya, hapus sekarang",
+        cancelButtonText: "Batal",
+      }).then(async (result) => {
+        if (result.value) {
+          this.deleteGoods({ _id: id }).then(() => {
+            Swal.fire("Dihapus!", "Data berhasil dihapus.", "success");
+          });
+        }
+      });
+    },
+    async getGoods() {
+      await this.fetchGoods({ month: this.month, year: this.year });
+    },
+    getMonth() {
       const currentMonthNumber = date.getMonth();
-      const currentYear = date.getFullYear();
-
-      const months = [
-        "Januari",
-        "Februari",
-        "Maret",
-        "April",
-        "Mei",
-        "Juni",
-        "Juli",
-        "Agustus",
-        "September",
-        "Oktober",
-        "November",
-        "Desember",
-      ];
-
-      //const years = () => Array.from(length: 5);
-
       const currentMonth = months[currentMonthNumber];
-      document
-        .getElementById("month-period")
-        .setAttribute("value", currentMonth);
-      document.getElementById("year-period").setAttribute("value", currentYear);
-
+      return currentMonth;
+    },
+    inventoryLoad() {
       const monthsElement = document.getElementById("month-list");
       months.forEach((item) => {
         const option = document.createElement("option");
@@ -95,5 +142,6 @@ export default {
   mounted() {
     this.inventoryLoad();
   },
+  computed: mapGetters(["allGoods"]),
 };
 </script>
