@@ -186,6 +186,12 @@ export default {
       this.addKpm(this.kpmData).then(() => {
         $("#exampleModal").modal("hide"); //eslint-disable-line no-undef
         Swal.fire("Success!", "KPM Berhasil Terdaftar", "success");
+        this.fetchGoods({
+          month: this.datepick.month,
+          year: this.datepick.year,
+        }).then(() => {
+          this.$router.push({ path: "/main-transaction" });
+        });
       });
     },
     checkValidation() {

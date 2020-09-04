@@ -1,5 +1,7 @@
 import axios from "axios";
-import { API_LOCATION } from "../../../config/config";
+import {
+  API_LOCATION
+} from "../../../config/config";
 
 const url = `${API_LOCATION}/goods`;
 
@@ -12,13 +14,17 @@ const getters = {
 };
 
 const actions = {
-  async addGoods({ commit }, payload) {
+  async addGoods({
+    commit
+  }, payload) {
     const response = await axios.post(`${url}`, payload);
 
     commit("addGoods", response.data);
   },
 
-  async fetchGoods({ commit }, payload) {
+  async fetchGoods({
+    commit
+  }, payload) {
     const response = await axios.get(
       `${url}?m=${payload.month}&y=${payload.year}`
     );
@@ -26,13 +32,17 @@ const actions = {
     commit("setGoods", response.data);
   },
 
-  async deleteGoods({ commit }, payload) {
+  async deleteGoods({
+    commit
+  }, payload) {
     await axios.delete(`${url}/${payload._id}`);
 
     commit("deleteGoods", payload);
   },
 
-  async updateGood({ commit }, payload) {
+  async updateGood({
+    commit
+  }, payload) {
     await axios.put(`${url}/${payload._id}`, payload);
 
     commit("updateGood", payload);

@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex"; //eslint-disable-line no-undef
 /*global EventBus */
 /*eslint no-undef: "error"*/
 export default {
@@ -38,6 +39,7 @@ export default {
     index: Number,
   },
   methods: {
+    ...mapMutations(["updateCart"]),
     btnMinus() {
       if (this.buyQty > 0) {
         this.buyQty--;
@@ -59,6 +61,18 @@ export default {
   mounted() {
     EventBus.$on("change-value", () => {
       this.onChangeValue();
+    });
+
+    EventBus.$on("checkout-clicked", () => {
+      if (this.buyQty > 0) {
+        let payload = {
+          itemId: this.good._id,
+          name: this.good.name,
+          qty: this.buyQty,
+          sumOfPrice: Number(this.buyQty) * this.good.sellPrice,
+        };
+        this.updateCart(payload);
+      }
     });
   },
 };

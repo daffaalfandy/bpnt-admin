@@ -207,6 +207,7 @@ export default {
 
       this.addGoods(payload).then(() => {
         $("#exampleModal").modal("hide");
+        Swal.fire("Success!", "Data Berhasil Ditambahkan", "success");
       });
     },
     onClickAdd() {

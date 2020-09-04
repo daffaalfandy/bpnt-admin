@@ -48,9 +48,9 @@
 </template>
 
 <script>
-/*global Swal, */
+/*global Swal, EventBus*/
 /*eslint no-undef: "error"*/
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import TransactionList from "../components/TransactionList";
 
 export default {
@@ -63,6 +63,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["newTransaction"]),
     onSumChange(value) {
       this.sumOfPrice += value;
     },
@@ -78,12 +79,27 @@ export default {
         cancelButtonText: "Lanjutkan Belanja",
       }).then((result) => {
         if (result.value) {
-          Swal.fire("Sukses!", "Transaksi selesai", "success");
+          EventBus.$emit("checkout-clicked");
+          let payload = {
+            kks: this.getKpm.kpm.kks,
+            datepick: {
+              date: this.datepick.date,
+              month: this.datepick.month,
+              year: this.datepick.year,
+            },
+            items: this.cart,
+            overallPrice: this.sumOfPrice,
+          };
+
+          this.newTransaction(payload).then(() => {
+            Swal.fire("Sukses!", "Transaksi selesai", "success");
+            this.$router.push({ path: "/" });
+          });
         }
       });
     },
   },
   mounted() {},
-  computed: mapGetters(["datepick", "getKpm", "allGoods"]),
+  computed: mapGetters(["datepick", "getKpm", "allGoods", "cart"]),
 };
 </script>
