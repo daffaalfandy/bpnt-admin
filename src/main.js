@@ -10,6 +10,8 @@ Vue.config.productionTip = false;
 
 window.Swal = Swal;
 
+window.EventBus = new Vue();
+
 new Vue({
   router,
   store,

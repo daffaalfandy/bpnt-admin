@@ -7,79 +7,40 @@
         <form>
           <div class="row mt-5">
             <div class="col-6 mx-auto">
-              <div class="form-inline">
+              <div class="form-inline justify-content-center">
                 <div class="form-group">
-                  <label for="datepick" style="font-weight: 400"
-                    >Pilih Tanggal:</label
-                  >
+                  <label for="datepick" style="font-weight: 400">Pilih Tanggal:</label>
                   <input
-                    v-model="datepick"
+                    @change="onChangeDatepick"
                     type="date"
                     class="form-control ml-5"
                     id="datepick"
                   />
-                  <div class="invalid-feedback mb-0" id="invalid-date">
-                    Silahkan pilih tanggal.
-                  </div>
+                  <!-- <MainTransaction month="juli" year="2020"></MainTransaction> -->
                 </div>
+                <div class="invalid-feedback mb-0" id="invalid-date">Silahkan pilih tanggal.</div>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-10 mx-auto">
               <div id="start-form">
-                <label style="font-weight: 400" for="kks-number"
-                  >Masukkan nomor KKS:</label
-                >
+                <label style="font-weight: 400" for="kks-number">Masukkan nomor KKS:</label>
                 <div id="start-form"></div>
-                <input
-                  disabled
-                  type="text"
-                  id="kks-number-1"
-                  name="kks-number-1"
-                  maxlength="4"
-                  class="form-control"
-                  v-model="kks1"
-                />
+                <input disabled type="text" maxlength="4" class="form-control" v-model="kks1" />
 
-                <input
-                  disabled
-                  type="text"
-                  id="kks-number-2"
-                  name="kks-number-2"
-                  maxlength="4"
-                  class="form-control"
-                  v-model="kks2"
-                />
-                <input
-                  type="text"
-                  id="kks-number-3"
-                  name="kks-number-3"
-                  maxlength="4"
-                  class="form-control"
-                  v-model="kks3"
-                />
-                <input
-                  type="text"
-                  id="kks-number-4"
-                  name="kks-number-4"
-                  maxlength="4"
-                  class="form-control"
-                  v-model="kks4"
-                />
+                <input disabled type="text" maxlength="4" class="form-control" v-model="kks2" />
+                <input type="text" maxlength="4" class="form-control" v-model="kks3" />
+                <input type="text" maxlength="4" class="form-control" v-model="kks4" />
               </div>
-              <div class="invalid-feedback mb-0" id="invalid-kks">
-                Masukkan nomor KKS dengan benar.
-              </div>
+              <div class="invalid-feedback mb-0" id="invalid-kks">Masukkan nomor KKS dengan benar.</div>
             </div>
             <div class="container text-center mt-4">
               <button
                 id="btn-main"
                 class="btn btn-primary px-4 mb-5"
                 @click.prevent="startPeriode"
-              >
-                Mulai
-              </button>
+              >Mulai</button>
             </div>
           </div>
         </form>
@@ -98,47 +59,18 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Tambah Data KPM</h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <form>
+          <form @submit.prevent="addNewKpm">
             <div class="modal-body text-center">
               <div class="form-inline mb-3" id="start-form">
-                <input
-                  disabled
-                  type="text"
-                  maxlength="4"
-                  class="form-control"
-                  v-model="kks1"
-                />
+                <input disabled type="text" maxlength="4" class="form-control" v-model="kks1" />
 
-                <input
-                  disabled
-                  type="text"
-                  maxlength="4"
-                  class="form-control"
-                  v-model="kks2"
-                />
-                <input
-                  disabled
-                  type="text"
-                  maxlength="4"
-                  class="form-control"
-                  v-model="kks3"
-                />
-                <input
-                  disabled
-                  type="text"
-                  maxlength="4"
-                  class="form-control"
-                  v-model="kks4"
-                />
+                <input disabled type="text" maxlength="4" class="form-control" v-model="kks2" />
+                <input disabled type="text" maxlength="4" class="form-control" v-model="kks3" />
+                <input disabled type="text" maxlength="4" class="form-control" v-model="kks4" />
               </div>
               <div class="form-group">
                 <input
@@ -156,6 +88,7 @@
                   class="form-control mr-4"
                   placeholder="Dusun KPM"
                   v-model="kpmData.hamlet"
+                  required
                 />
                 <input
                   type="text"
@@ -170,6 +103,7 @@
                   class="form-control"
                   placeholder="Desa KPM"
                   v-model="kpmData.village"
+                  required
                 />
               </div>
               <div class="form-group">
@@ -178,24 +112,13 @@
                   class="form-control"
                   placeholder="Kecamatan KPM"
                   v-model="kpmData.subDistrict"
+                  required
                 />
               </div>
             </div>
             <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-dismiss="modal"
-              >
-                Close
-              </button>
-              <button
-                type="submit"
-                class="btn btn-primary"
-                @click.prevent="addNewKpm"
-              >
-                Tambah
-              </button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Tambah</button>
             </div>
           </form>
         </div>
@@ -209,9 +132,16 @@ import { mapGetters, mapActions } from "vuex"; //eslint-disable-line no-undef
 import { kks1, kks2 } from "../../config/config";
 
 export default {
+  components: {
+    // MainTransaction,
+  },
   data() {
     return {
-      datepick: "",
+      datepick: {
+        date: "",
+        month: "",
+        year: "",
+      },
       kks1: kks1,
       kks2: kks2,
       kks3: "",
@@ -227,13 +157,43 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["addKpm", "fetchOneKpm"]),
+    /*global Swal, $*/
+    /*eslint no-undef: "error"*/
+    ...mapActions(["addKpm", "fetchOneKpm", "changeDatepick", "fetchGoods"]),
+    onChangeDatepick() {
+      const months = [
+        "Januari",
+        "Februari",
+        "Maret",
+        "April",
+        "Mei",
+        "Juni",
+        "Juli",
+        "Agustus",
+        "September",
+        "Oktober",
+        "November",
+        "Desember",
+      ];
+      let value = document.getElementById("datepick").value.split("-");
+      this.datepick.year = value[0];
+      this.datepick.month = months[Number(value[1]) - 1];
+      this.datepick.date = value[2];
+
+      this.changeDatepick(this.datepick);
+    },
     async addNewKpm() {
-      await this.addKpm(this.kpmData);
-      $("#exampleModal").modal("hide"); //eslint-disable-line no-undef
+      this.addKpm(this.kpmData).then(() => {
+        $("#exampleModal").modal("hide"); //eslint-disable-line no-undef
+        Swal.fire("Success!", "KPM Berhasil Terdaftar", "success");
+      });
     },
     checkValidation() {
-      if (this.datepick === "") {
+      if (
+        this.datepick.date === "" &&
+        this.datepick.month === "" &&
+        this.datepick.year === ""
+      ) {
         document.getElementById("invalid-date").style.display = "block";
         return false;
       } else {
@@ -256,57 +216,17 @@ export default {
         if (this.getKpm.kpm.length === 0) {
           $("#exampleModal").modal("show"); //eslint-disable-line no-undef
         } else {
-          console.log("terdaftar");
-        }
-        // this.$router.push("/input-kpm");
-      }
-    },
-    _changeFocus(currentIndex, dest) {
-      let intIndex = parseInt(currentIndex);
-      if (dest === "next") {
-        intIndex += 1;
-      } else {
-        intIndex -= 1;
-      }
-      const nextElement = document.getElementById(`kks-number-${intIndex}`);
-      nextElement.focus();
-    },
-    watchKKSEvent() {
-      for (let i = 3; i <= 4; i++) {
-        document
-          .getElementById(`kks-number-${i}`)
-          .addEventListener("keyup", (e) => {
-            this._onKKSKeyUpEvent(i, e);
+          this.fetchGoods({
+            month: this.datepick.month,
+            year: this.datepick.year,
+          }).then(() => {
+            this.$router.push({ path: "/main-transaction" });
           });
-        document
-          .getElementById(`kks-number-${i}`)
-          .addEventListener("click", () => {
-            document.getElementById(`kks-number-${i}`).select();
-          });
-      }
-    },
-    _onKKSKeyUpEvent(currentIndex, event) {
-      const inputKKSNumber = document.getElementById(
-        `kks-number-${currentIndex}`
-      );
-      const inputLength = inputKKSNumber.value.length;
-      if (inputLength === 4) {
-        if (currentIndex < 4) {
-          this._changeFocus(currentIndex, "next");
-        }
-      }
-      if (inputLength === 0) {
-        if (event.keyCode === 8) {
-          if (currentIndex > 1) {
-            this._changeFocus(currentIndex, "before");
-          }
         }
       }
     },
   },
-  mounted() {
-    this.watchKKSEvent();
-  },
+  mounted() {},
   computed: mapGetters(["getKpm"]),
 };
 </script>

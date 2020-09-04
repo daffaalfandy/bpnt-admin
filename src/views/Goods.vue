@@ -23,9 +23,7 @@
               v-model="year"
             />
             <datalist id="year-list"></datalist>
-            <button class="btn btn-primary px-4" @click.prevent="getGoods">
-              Mulai
-            </button>
+            <button class="btn btn-primary px-4" @click.prevent="getGoods">Mulai</button>
           </div>
         </div>
         <div class="container">
@@ -52,7 +50,9 @@
                     <span class="fas fa-edit text-blue"></span>
                   </a>
                   &nbsp; &nbsp; &nbsp; / &nbsp; &nbsp; &nbsp;
-                  <a @click.prevent="onDeleteGoods(good._id)">
+                  <a
+                    @click.prevent="onDeleteGoods(good._id)"
+                  >
                     <span class="fas fa-trash-alt text-red"></span>
                   </a>
                 </td>
@@ -66,9 +66,7 @@
               id="btn-add-item"
               class="btn btn-primary"
               @click.prevent="onClickAdd"
-            >
-              Tambahkan Barang
-            </button>
+            >Tambahkan Barang</button>
           </div>
         </div>
       </div>
@@ -84,19 +82,15 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">
-              {{ isEdit ? "Edit Data Barang" : "Tambah Data Barang" }}
-            </h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
+            <h5
+              class="modal-title"
+              id="exampleModalLabel"
+            >{{ isEdit ? "Edit Data Barang" : "Tambah Data Barang" }}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <form>
+          <form @submit.prevent="isEdit ? onEditGood() : onCreateGood()">
             <div class="modal-body text-center">
               <div class="form-group">
                 <input
@@ -113,6 +107,7 @@
                   class="form-control"
                   placeholder="Stok Barang"
                   v-model="good.stock"
+                  required
                 />
               </div>
               <div class="form-group">
@@ -121,6 +116,7 @@
                   class="form-control"
                   placeholder="Unit Barang"
                   v-model="good.unit"
+                  required
                 />
               </div>
               <div class="form-group">
@@ -129,6 +125,7 @@
                   class="form-control"
                   placeholder="Harga Beli"
                   v-model="good.buyPrice"
+                  required
                 />
               </div>
               <div class="form-group">
@@ -137,24 +134,13 @@
                   class="form-control"
                   placeholder="Harga Jual"
                   v-model="good.sellPrice"
+                  required
                 />
               </div>
             </div>
             <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-dismiss="modal"
-              >
-                Close
-              </button>
-              <button
-                type="submit"
-                class="btn btn-primary"
-                @click.prevent="isEdit ? onEditGood() : onCreateGood()"
-              >
-                {{ isEdit ? "Simpan" : "Tambah" }}
-              </button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">{{ isEdit ? "Simpan" : "Tambah" }}</button>
             </div>
           </form>
         </div>
@@ -202,9 +188,10 @@ export default {
   /*eslint no-undef: "error"*/
   methods: {
     ...mapActions(["addGoods", "fetchGoods", "deleteGoods", "updateGood"]),
-    onEditGood() {
+    async onEditGood() {
       this.updateGood(this.good).then(() => {
         $("#exampleModal").modal("hide");
+        Swal.fire("Success!", "Data Berhasil Diedit", "success");
       });
     },
     onCreateGood() {
@@ -283,7 +270,12 @@ export default {
   },
   mounted() {
     this.inventoryLoad();
-    document.getElementById("btn-add-item").disabled = true;
+
+    if (this.allGoods.goods) {
+      document.getElementById("btn-add-item").disabled = false;
+    } else {
+      document.getElementById("btn-add-item").disabled = true;
+    }
   },
   computed: mapGetters(["allGoods"]),
 };

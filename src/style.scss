@@ -38,6 +38,9 @@ body {
     font-family: $source-sans-pro;
     margin-top: 2rem;
     text-align: center;
+    border-width: 2px;
+    border-bottom-style: solid;
+    border-top-style: solid;
 
     td {
         vertical-align: middle;
@@ -60,5 +63,74 @@ body {
         @extend .col-1;
         max-width: 6em;
         margin-right: 0.5em;
+    }
+}
+
+.number-spinner {
+    max-width: 150px;
+    line-height: 40px;
+    padding: 0;
+    margin: 0;
+    border-radius: 4px;
+    border: 2px solid #e2e2e2;
+    overflow: hidden;
+    position: relative;
+    display: table;
+
+    input {
+        height: 40px;
+        max-height: 40px;
+        line-height: 40px;
+        font-size: 1em;
+        padding: 0;
+        margin: 0;
+        border: none;
+        position: relative;
+        float: left;
+        width: 100%;
+        text-align: center;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    .ns-btn {
+        position: relative;
+        font-size: 0;
+        white-space: nowrap;
+        vertical-align: middle;
+        display: table-cell;
+        cursor: pointer;
+
+        a {
+            height: 40px;
+            min-height: 40px;
+            width: 40px;
+            padding: 0;
+            max-width: 40px;
+            line-height: 40px;
+            border-radius: 0;
+            border: none;
+            text-align: center;
+            position: relative;
+            background: #e2e2e2;
+            color: #333;
+            display: inline-block;
+            vertical-align: middle;
+            text-decoration: none;
+        }
+
+        .icon-minus:after {
+            content: "\002212";
+            font-size: 28px;
+            line-height: 38px;
+        }
+
+        .icon-plus:after {
+            content: "\00002B";
+            font-size: 28px;
+            line-height: 35px;
+        }
     }
 }
