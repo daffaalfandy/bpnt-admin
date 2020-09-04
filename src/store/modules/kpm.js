@@ -6,11 +6,13 @@ import {
 const url = `${API_LOCATION}/kpm`;
 
 const state = {
-    kpm: []
+    kpm: [],
+    allKpm: []
 }
 
 const getters = {
-    getKpm: (state) => state.kpm
+    getKpm: (state) => state.kpm,
+    allKpm: (state) => state.allKpm
 }
 
 const actions = {
@@ -30,12 +32,21 @@ const actions = {
         });
 
         commit('setKpm', response.data)
+    },
+
+    async fetchKpm({
+        commit
+    }) {
+        const response = await axios.get(url)
+
+        commit('allKpm', response.data)
     }
 }
 
 const mutations = {
     addKpm: (state, payload) => (state.kpm = payload),
-    setKpm: (state, payload) => (state.kpm = payload)
+    setKpm: (state, payload) => (state.kpm = payload),
+    allKpm: (state, payload) => (state.allKpm = payload)
 }
 
 export default {

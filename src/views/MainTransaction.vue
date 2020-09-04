@@ -7,7 +7,7 @@
       >Transaksi BPNT, {{datepick.date}} {{datepick.month}} {{datepick.year}}</h3>
       <div class="card-body">
         <div class="container">
-          <span class="h5">Nama: {{getKpm.kpm.name}} || No. KKS: {{getKpm.kpm.kks}}</span>
+          <span class="h5">Nama: {{getKpm.kpm.name}} || No. KKS: {{formatKks(getKpm.kpm.kks)}}</span>
           <table class="main-table mt-4">
             <thead>
               <tr>

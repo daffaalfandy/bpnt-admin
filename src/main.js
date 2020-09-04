@@ -7,6 +7,11 @@ import "./style.scss";
 import "./bootstrap";
 
 Vue.config.productionTip = false;
+Vue.mixin({
+  methods: {
+    formatKks: kks => kks.match(/.{1,4}/g).join("-")
+  }
+})
 
 window.Swal = Swal;
 
