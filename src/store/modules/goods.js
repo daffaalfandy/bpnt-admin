@@ -41,7 +41,7 @@ const actions = {
   },
 
   async updateGood({
-    commit
+    commit // eslint-disable-line no-unused-vars
   }, payload) {
     await axios.put(`${url}/${payload._id}`, payload);
 

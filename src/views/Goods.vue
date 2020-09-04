@@ -42,9 +42,9 @@
               <tr v-for="(good, index) in allGoods.goods" :key="good._id">
                 <td>{{ index + 1 }}</td>
                 <td>{{ good.name }}</td>
-                <td>{{ good.stock }} {{ good.unit }}</td>
-                <td>{{ good.buyPrice }}</td>
-                <td>{{ good.sellPrice }}</td>
+                <td>{{ good.stock.toLocaleString('id-ID') }} {{ good.unit }}</td>
+                <td>Rp{{ good.buyPrice.toLocaleString('id-ID') }}</td>
+                <td>Rp{{ good.sellPrice.toLocaleString('id-ID') }}</td>
                 <td>
                   <a @click.prevent="onClickEdit(good)">
                     <span class="fas fa-edit text-blue"></span>
@@ -213,6 +213,7 @@ export default {
     onClickAdd() {
       this.isEdit = false;
 
+      this.good._id = "";
       this.good.name = "";
       this.good.stock = "";
       this.good.unit = "";

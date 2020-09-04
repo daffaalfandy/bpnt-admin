@@ -75,5 +75,8 @@ export default {
       }
     });
   },
+  beforeDestroy() {
+    EventBus.$off("checkout-clicked", this.listener);
+  },
 };
 </script>

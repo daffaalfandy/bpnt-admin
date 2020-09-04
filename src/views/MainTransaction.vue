@@ -50,7 +50,7 @@
 <script>
 /*global Swal, EventBus*/
 /*eslint no-undef: "error"*/
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 import TransactionList from "../components/TransactionList";
 
 export default {
@@ -64,6 +64,7 @@ export default {
   },
   methods: {
     ...mapActions(["newTransaction"]),
+    ...mapMutations(["emptyCart"]),
     onSumChange(value) {
       this.sumOfPrice += value;
     },
@@ -92,6 +93,7 @@ export default {
           };
 
           this.newTransaction(payload).then(() => {
+            this.emptyCart();
             Swal.fire("Sukses!", "Transaksi selesai", "success");
             this.$router.push({ path: "/" });
           });
