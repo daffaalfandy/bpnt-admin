@@ -25,7 +25,7 @@
               <div class="invalid-feedback mb-0" id="invalid-kks">Masukkan nomor KKS dengan benar.</div>
             </div>
             <div class="col-5 text-left">
-              <button class="btn btn-info pl-3">
+              <button @click.prevent="onClickSearch" class="btn btn-info pl-3">
                 Cari
                 <span class="fas fa-search ml-2"></span>
               </button>
@@ -47,12 +47,25 @@
               </tr>
             </thead>
             <tbody>
-              <template v-for="(kpm, index) in allKpm.allKpm">
+              <template v-for="(kpm, index) in pageOfItems">
                 <kpm-list :key="kpm._id" :index="index" :kpm="kpm"></kpm-list>
               </template>
             </tbody>
           </table>
         </div>
+      </div>
+      <div class="card-footer">
+        <jw-pagination
+          v-if="dataReady"
+          :items="allItems"
+          @changePage="onChangePage"
+          :labels="customLabels"
+          :style="
+            allKpm.allKpm.length > 10
+              ? 'display: inline-block'
+              : 'display: none !important;'
+          "
+        ></jw-pagination>
       </div>
     </div>
   </div>
@@ -73,14 +86,40 @@ export default {
       kks2: kks2,
       kks3: "",
       kks4: "",
+      pageOfItems: [],
+      allItems: {},
+      customLabels: {
+        first: "Awal",
+        last: "Akhir",
+        previous: "<",
+        next: ">",
+      },
+      dataReady: false,
     };
   },
   methods: {
-    ...mapActions(["fetchKpm"]),
+    ...mapActions(["fetchKpm", "fetchOneKpm"]),
+    async onClickSearch() {
+      if (this.kks3 !== "" && this.kks4 !== "") {
+        let payload = {
+          kks: this.kks1 + this.kks2 + this.kks3 + this.kks4,
+        };
+        await this.fetchOneKpm(payload);
+        this.allItems = [];
+        this.allItems[0] = this.getKpm.kpm;
+      } else {
+        this.allItems = this.allKpm.allKpm;
+      }
+    },
+    onChangePage(pageOfItems) {
+      this.pageOfItems = pageOfItems;
+    },
   },
-  mounted() {
-    this.fetchKpm();
+  async mounted() {
+    await this.fetchKpm();
+    this.allItems = this.allKpm.allKpm;
+    this.dataReady = true;
   },
-  computed: mapGetters(["allKpm"]),
+  computed: mapGetters(["allKpm", "getKpm"]),
 };
 </script>
