@@ -21,7 +21,11 @@ const actions = {
     }, payload) {
         const response = await axios.post(`${url}`, payload);
 
-        commit('addKpm', response.data)
+        if (payload.fetchAll) {
+            commit('onKpmAdded', response.data)
+        } else {
+            commit('addKpm', response.data)
+        }
     },
 
     async fetchOneKpm({
@@ -40,6 +44,14 @@ const actions = {
         const response = await axios.get(url)
 
         commit('allKpm', response.data)
+    },
+
+    async updateOneKpm({
+        commit
+    }, payload) {
+        const response = await axios.put(`${url}/${payload._id}`, payload)
+
+        commit('onKpmUpdate', response.data)
     },
 
     async deleteOneKpm({
@@ -61,6 +73,10 @@ const mutations = {
         );
         state.allKpm.allKpm.splice(index, 1);
     },
+    onKpmAdded: (state, payload) => (state.allKpm.allKpm.unshift(payload.kpm)),
+    onKpmUpdate: (state, payload) => {
+        state.kpm = payload.kpm
+    }
 }
 
 export default {

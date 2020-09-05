@@ -4,7 +4,7 @@
     <td>{{kpm.name}}</td>
     <td>{{formatKks(kpm.kks)}}</td>
     <td>
-      <a>
+      <a @click.prevent="onClickDetail">
         <span class="text-blue fas fa-info-circle"></span>
       </a>
       &nbsp; &nbsp; &nbsp; / &nbsp; &nbsp; &nbsp;
@@ -18,7 +18,7 @@
 <script>
 /*global Swal*/
 /*eslint no-undef: "error"*/
-import { mapActions } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 
 export default {
   props: {
@@ -27,6 +27,11 @@ export default {
   },
   methods: {
     ...mapActions(["deleteOneKpm"]),
+    ...mapMutations(["setKpm"]),
+    onClickDetail() {
+      this.setKpm(this.kpm);
+      this.$router.push({ path: "/kpm-detail" });
+    },
     onClickDelete() {
       Swal.fire({
         title: "Apakah Anda yakin?",
@@ -40,6 +45,7 @@ export default {
       }).then(async (result) => {
         if (result.value) {
           this.deleteOneKpm({ _id: this.kpm._id }).then(() => {
+            this.$emit("kpmDeleted");
             Swal.fire("Dihapus!", "Data berhasil dihapus.", "success");
           });
         }

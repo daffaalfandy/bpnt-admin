@@ -69,6 +69,7 @@ export default {
           itemId: this.good._id,
           name: this.good.name,
           qty: this.buyQty,
+          unit: this.good.unit,
           sumOfPrice: Number(this.buyQty) * this.good.sellPrice,
         };
         this.updateCart(payload);

@@ -8,11 +8,13 @@ const url = `${API_LOCATION}/transaction`;
 const state = {
     datepick: {},
     cart: [],
+    transaction: []
 };
 
 const getters = {
     datepick: (state) => state.datepick,
     cart: (state) => state.cart,
+    transaction: (state) => state.transaction
 };
 
 const actions = {
@@ -29,12 +31,21 @@ const actions = {
     ) {
         await axios.post(url, payload);
     },
+
+    async getTransaction({
+        commit
+    }, payload) {
+        const response = await axios.get(`${url}/${payload.kks}`)
+
+        commit('addTransaction', response.data)
+    }
 };
 
 const mutations = {
     changeDatepick: (state, payload) => (state.datepick = payload),
     updateCart: (state, payload) => state.cart.push(payload),
     emptyCart: (state) => (state.cart = []),
+    addTransaction: (state, payload) => (state.transaction = payload)
 };
 
 export default {
