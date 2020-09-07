@@ -4,6 +4,8 @@ import router from "./router";
 import store from "./store";
 import Swal from "sweetalert2";
 import JwPagination from "jw-vue-pagination";
+import * as pdfMake from "pdfmake/build/pdfmake"
+import * as pdfFonts from 'pdfmake/build/vfs_fonts'
 import "./style.scss";
 import "./bootstrap";
 
@@ -16,6 +18,8 @@ Vue.mixin({
 Vue.component("jw-pagination", JwPagination);
 
 window.Swal = Swal;
+window.pdfMake = pdfMake
+window.pdfFonts = pdfFonts
 
 window.EventBus = new Vue();
 

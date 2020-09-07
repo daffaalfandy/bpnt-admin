@@ -5,13 +5,19 @@
         <div class="row">
           <div class="col-lg-10 col-12 mx-auto">
             <div class="row">
-              <h3 class="text-center col-12 my-auto">Riwayat Transaksi / Form Kontrol</h3>
-              <small
-                class="text-center text-secondary col-12 my-auto"
-              >*Silahkan gunakan laptop atau komputer untuk menyimpan dalam bentuk PDF*</small>
+              <h3 class="text-center col-12 my-auto">
+                Riwayat Transaksi / Form Kontrol
+              </h3>
+              <small class="text-center text-secondary col-12 my-auto"
+                >*Silahkan gunakan laptop atau komputer untuk menyimpan dalam
+                bentuk PDF*</small
+              >
             </div>
           </div>
-          <button class="btn btn-info col-2 export-to-pdf">
+          <button
+            @click="onClickMakePDF"
+            class="btn btn-info col-2 export-to-pdf"
+          >
             Simpan ke PDF
             <span class="fas fa-file-pdf ml-2"></span>
           </button>
@@ -31,18 +37,23 @@
               class="btn btn-primary mr-1"
               style="font-size: 0.9em"
               @click.prevent="onClickDate"
-            >Berdasarkan Tanggal</button>
+            >
+              Berdasarkan Tanggal
+            </button>
             <button
               class="btn btn-primary"
               style="font-size: 0.9em"
               @click.prevent="onClickMonth"
-            >Berdasarkan Bulan</button>
+            >
+              Berdasarkan Bulan
+            </button>
           </div>
         </div>
         <div class="container">
-          <small
-            class="text-left text-secondary my-auto"
-          >*Silahkan simpan dalam bentuk PDF untuk detail lebih lengkap*</small>
+          <small class="text-left text-secondary my-auto"
+            >*Silahkan simpan dalam bentuk PDF untuk detail lebih
+            lengkap*</small
+          >
           <table class="main-table mt-2">
             <thead>
               <tr>
@@ -53,11 +64,18 @@
               </tr>
             </thead>
             <tbody v-if="datepick !== null">
-              <tr v-for="(transaction, index) in pageOfItems" :key="transaction._id">
-                <td>{{index + 1}}</td>
-                <td>{{formatKks(transaction.kks)}}</td>
-                <td>{{transaction.datepick.date}}, {{transaction.datepick.month}} {{transaction.datepick.year}}</td>
-                <td>{{loopsItems(transaction.items)}}</td>
+              <tr
+                v-for="(transaction, index) in pageOfItems"
+                :key="transaction._id"
+              >
+                <td>{{ index + 1 }}</td>
+                <td>{{ formatKks(transaction.kks) }}</td>
+                <td>
+                  {{ transaction.datepick.date }},
+                  {{ transaction.datepick.month }}
+                  {{ transaction.datepick.year }}
+                </td>
+                <td>{{ loopsItems(transaction.items) }}</td>
               </tr>
             </tbody>
           </table>
@@ -81,6 +99,8 @@
 </template>
 
 <script>
+/*global pdfMake, pdfFonts*/
+/*eslint no-undef: "error"*/
 import { kks1, kks2 } from "../../config/config";
 import { mapActions, mapGetters } from "vuex";
 
@@ -105,6 +125,48 @@ export default {
   },
   methods: {
     ...mapActions(["getTransactionBasedOnDate", "getTransactionBasedOnMonth"]),
+    onClickMakePDF() {
+      let externalDataRetrievedFromServer = [
+        { name: "Bartek", age: 34 },
+        { name: "John", age: 27 },
+        { name: "Elizabeth", age: 30 },
+      ];
+      pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
+      let docDefinition = {
+        pageOrientation: "landscape",
+        pageSize: "A4",
+        content: [this.table(externalDataRetrievedFromServer, ["name", "age"])],
+      };
+
+      pdfMake.createPdf(docDefinition).open();
+    },
+    buildTableBody(data, columns) {
+      var body = [];
+
+      body.push(columns);
+
+      data.forEach(function(row) {
+        var dataRow = [];
+
+        columns.forEach(function(column) {
+          dataRow.push(row[column].toString());
+        });
+
+        body.push(dataRow);
+      });
+
+      return body;
+    },
+    table(data, columns) {
+      return {
+        table: {
+          headerRows: 1,
+          body: this.buildTableBody(data, columns),
+        },
+        layout: "lightHorizontalLines",
+      };
+    },
     async onClickDate() {
       if (this.datepick.month) {
         await this.getTransactionBasedOnDate(this.datepick);
