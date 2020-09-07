@@ -5,6 +5,7 @@ import MainTransaction from '../views/MainTransaction'
 import Goods from '../views/Goods'
 import Kpm from '../views/Kpm'
 import KpmDetail from '../views/KpmDetail'
+import HistoryTransaction from '../views/HistoryTransaction'
 
 window.Vue = Vue
 
@@ -34,6 +35,11 @@ const routes = [{
     path: '/kpm-detail',
     name: "KPM Detail",
     component: KpmDetail
+  },
+  {
+    path: '/transaction-history',
+    name: "History Transaction",
+    component: HistoryTransaction
   }
 ]
 

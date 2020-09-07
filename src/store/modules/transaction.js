@@ -35,7 +35,23 @@ const actions = {
     async getTransaction({
         commit
     }, payload) {
-        const response = await axios.get(`${url}/${payload.kks}`)
+        const response = await axios.get(`${url}/kks/${payload.kks}`)
+
+        commit('addTransaction', response.data)
+    },
+
+    async getTransactionBasedOnDate({
+        commit
+    }, payload) {
+        const response = await axios.get(`${url}/all?d=${payload.date}&m=${payload.month}&y=${payload.year}`) // eslint-disable-line no-unused-vars
+
+        commit('addTransaction', response.data)
+    },
+
+    async getTransactionBasedOnMonth({
+        commit
+    }, payload) {
+        const response = await axios.get(`${url}/all?m=${payload.datepick.month}&y=${payload.datepick.year}`) // eslint-disable-line no-unused-vars
 
         commit('addTransaction', response.data)
     }
