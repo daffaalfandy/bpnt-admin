@@ -223,7 +223,7 @@ export default {
             dataRow.push({ text: index + 1, fontSize: 10 });
           } else if (column.text == "TANGGAL") {
             dataRow.push({
-              text: `${row.datepick.date}, ${row.datepick.month} ${row.datepick.year}`,
+              text: `${row.datepick.date}, ${row.datepick.month}`,
               fontSize: 10,
             });
           } else if (column.text == "NAMA") {
