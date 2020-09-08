@@ -82,7 +82,7 @@ export default {
         if (result.value) {
           EventBus.$emit("checkout-clicked");
           let payload = {
-            kks: this.getKpm.kpm.kks,
+            kpm: this.getKpm.kpm,
             datepick: {
               date: this.datepick.date,
               month: this.datepick.month,
