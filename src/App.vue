@@ -5,9 +5,9 @@
       <!-- Left navbar links -->
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" data-widget="pushmenu" href="#" role="button"
-            ><i class="fas fa-bars"></i
-          ></a>
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button">
+            <i class="fas fa-bars"></i>
+          </a>
         </li>
       </ul>
     </nav>
@@ -51,45 +51,21 @@
             data-accordion="false"
           >
             <li class="nav-item">
-              <router-link
-                tag="a"
-                active-class="active"
-                exact
-                to="/"
-                class="nav-link"
-              >
+              <router-link tag="a" active-class="active" exact to="/" class="nav-link">
                 <i class="nav-icon fas fa-cash-register mr-2"></i>
-                <p>
-                  Transaksi
-                </p>
+                <p>Transaksi</p>
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link
-                tag="a"
-                active-class="active"
-                exact
-                to="/goods"
-                class="nav-link"
-              >
+              <router-link tag="a" active-class="active" exact to="/goods" class="nav-link">
                 <i class="nav-icon fas fa-th mr-2"></i>
-                <p>
-                  Data Barang
-                </p>
+                <p>Data Barang</p>
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link
-                tag="a"
-                active-class="active"
-                exact
-                to="/kpm"
-                class="nav-link"
-              >
+              <router-link tag="a" active-class="active" exact to="/kpm" class="nav-link">
                 <i class="nav-icon fas fa-user-friends mr-2"></i>
-                <p>
-                  Data KPM
-                </p>
+                <p>Data KPM</p>
               </router-link>
             </li>
             <li class="nav-item">
@@ -101,23 +77,13 @@
                 class="nav-link"
               >
                 <i class="nav-icon fas fa-history mr-2"></i>
-                <p>
-                  Riwayat Transaksi
-                </p>
+                <p>Riwayat Transaksi</p>
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link
-                tag="a"
-                active-class="active"
-                exact
-                to="/final-report"
-                class="nav-link"
-              >
+              <router-link tag="a" active-class="active" exact to="/final-report" class="nav-link">
                 <i class="nav-icon fas fa-receipt mr-2"></i>
-                <p>
-                  Laporan Akhir
-                </p>
+                <p>Laporan Akhir</p>
               </router-link>
             </li>
             <li class="nav-item">
@@ -125,27 +91,17 @@
                 tag="a"
                 active-class="active"
                 exact
-                to="/profit-report"
+                to="/income-statement"
                 class="nav-link"
               >
                 <i class="nav-icon fas fa-coins mr-2"></i>
-                <p>
-                  Laba Rugi
-                </p>
+                <p>Laba Rugi</p>
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link
-                tag="a"
-                active-class="active"
-                exact
-                to="/logout"
-                class="nav-link"
-              >
+              <router-link tag="a" active-class="active" exact to="/logout" class="nav-link">
                 <i class="nav-icon fas fa-sign-out-alt mr-2"></i>
-                <p>
-                  Keluar
-                </p>
+                <p>Keluar</p>
               </router-link>
             </li>
           </ul>

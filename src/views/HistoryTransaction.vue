@@ -124,6 +124,18 @@ export default {
       let docDefinition = {
         pageOrientation: "landscape",
         pageSize: "A4",
+        footer: {
+          columns: [
+            { width: "*", text: "" },
+            {
+              text: "© 2020, Daffa Alfandy. All rights reserved.",
+              italics: true,
+              alignment: "center",
+              fontSize: 10,
+            },
+            { width: "*", text: "" },
+          ],
+        },
         content: [
           {
             text: "FORM KONTROL PROGRAM SEMBAKO",
