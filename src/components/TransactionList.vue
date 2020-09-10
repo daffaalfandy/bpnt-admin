@@ -1,17 +1,23 @@
 <template>
   <tr>
-    <td>{{index + 1}}</td>
-    <td>{{good.name}}</td>
-    <td>{{good.stock.toLocaleString('id-ID')}} {{good.unit}}</td>
-    <td>Rp{{good.sellPrice.toLocaleString('id-ID')}}</td>
+    <td>{{ index + 1 }}</td>
+    <td>{{ good.name }}</td>
+    <td>{{ good.stock.toLocaleString("id-ID") }} {{ good.unit }}</td>
+    <td>Rp{{ good.sellPrice.toLocaleString("id-ID") }}</td>
     <td>
-      <div class="number-spinner">
+      <div class="number-spinner mx-auto">
         <span class="ns-btn">
           <a data-dir="dwn" @click.prevent="btnMinus">
             <span class="icon-minus"></span>
           </a>
         </span>
-        <input type="number" class="pl-ns-value" v-model="buyQty" maxlength="2" disabled />
+        <input
+          type="number"
+          class="pl-ns-value"
+          v-model="buyQty"
+          maxlength="2"
+          disabled
+        />
         <span class="ns-btn">
           <a data-dir="up" @click.prevent="btnPlus">
             <span class="icon-plus"></span>
@@ -19,7 +25,7 @@
         </span>
       </div>
     </td>
-    <td class="text-right">Rp{{sumOfPrice.toLocaleString('id-ID')}}</td>
+    <td class="text-right">Rp{{ sumOfPrice.toLocaleString("id-ID") }}</td>
   </tr>
 </template>
 
@@ -54,7 +60,7 @@ export default {
         this.$emit("changeSumValue", this.good.sellPrice);
       }
     },
-    onChangeValue: function () {
+    onChangeValue: function() {
       this.sumOfPrice = Number(this.buyQty) * this.good.sellPrice;
     },
   },

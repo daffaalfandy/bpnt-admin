@@ -23,7 +23,9 @@
               v-model="year"
             />
             <datalist id="year-list"></datalist>
-            <button class="btn btn-primary px-4" @click.prevent="getGoods">Mulai</button>
+            <button class="btn btn-primary px-4" @click.prevent="getGoods">
+              Mulai
+            </button>
           </div>
         </div>
         <div class="container">
@@ -42,15 +44,21 @@
               <tr v-for="(good, index) in allGoods.goods" :key="good._id">
                 <td>{{ index + 1 }}</td>
                 <td>{{ good.name }}</td>
-                <td>{{ good.stock.toLocaleString('id-ID') }} {{ good.unit }}</td>
-                <td>Rp{{ good.buyPrice.toLocaleString('id-ID') }}</td>
-                <td>Rp{{ good.sellPrice.toLocaleString('id-ID') }}</td>
                 <td>
-                  <a @click.prevent="onClickEdit(good)">
+                  {{ good.stock.toLocaleString("id-ID") }} {{ good.unit }}
+                </td>
+                <td>Rp{{ good.buyPrice.toLocaleString("id-ID") }}</td>
+                <td>Rp{{ good.sellPrice.toLocaleString("id-ID") }}</td>
+                <td>
+                  <a
+                    class="btn py-0 my-0 px-0 mx-0"
+                    @click.prevent="onClickEdit(good)"
+                  >
                     <span class="fas fa-edit text-blue"></span>
                   </a>
                   &nbsp; &nbsp; &nbsp; / &nbsp; &nbsp; &nbsp;
                   <a
+                    class="btn py-0 my-0 px-0 mx-0"
                     @click.prevent="onDeleteGoods(good._id)"
                   >
                     <span class="fas fa-trash-alt text-red"></span>
@@ -66,7 +74,9 @@
               id="btn-add-item"
               class="btn btn-primary"
               @click.prevent="onClickAdd"
-            >Tambahkan Barang</button>
+            >
+              Tambahkan Barang
+            </button>
           </div>
         </div>
       </div>
@@ -82,11 +92,15 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5
-              class="modal-title"
-              id="exampleModalLabel"
-            >{{ isEdit ? "Edit Data Barang" : "Tambah Data Barang" }}</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <h5 class="modal-title" id="exampleModalLabel">
+              {{ isEdit ? "Edit Data Barang" : "Tambah Data Barang" }}
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -139,8 +153,16 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">{{ isEdit ? "Simpan" : "Tambah" }}</button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="submit" class="btn btn-primary">
+                {{ isEdit ? "Simpan" : "Tambah" }}
+              </button>
             </div>
           </form>
         </div>

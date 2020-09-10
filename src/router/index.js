@@ -11,6 +11,7 @@ import IncomeStatement from '../views/IncomeStatement'
 import Login from '../Login'
 import Dash from '../Dash'
 import store from '../store'
+import Logout from '../views/Logout'
 
 window.Vue = Vue
 
@@ -19,7 +20,15 @@ Vue.use(VueRouter)
 const routes = [{
     path: '/login',
     name: "Login",
-    component: Login
+    component: Login,
+    beforeEnter: (to, from, next) => {
+      if (from.name == "Logout") next()
+      if (store.getters.admin.name) {
+        next({
+          name: 'Transaction'
+        })
+      } else next()
+    }
   },
   {
     path: '/',
@@ -33,6 +42,12 @@ const routes = [{
         path: 'main-transaction',
         name: 'Main Transaction',
         component: MainTransaction,
+        beforeEnter: (to, from, next) => {
+          if (from.name !== "Transaction") next({
+            name: "Transaction"
+          })
+          else next()
+        }
       },
       {
         path: 'goods',
@@ -47,7 +62,13 @@ const routes = [{
       {
         path: 'kpm-detail',
         name: "KPM Detail",
-        component: KpmDetail
+        component: KpmDetail,
+        beforeEnter: (to, from, next) => {
+          if (from.name !== "KPM") next({
+            name: "KPM"
+          })
+          else next()
+        }
       },
       {
         path: 'transaction-history',
@@ -64,6 +85,11 @@ const routes = [{
         name: "Income Statement",
         component: IncomeStatement
       },
+      {
+        path: 'logout',
+        name: "Logout",
+        component: Logout
+      }
     ]
   }
 ]
@@ -75,7 +101,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.name !== 'Login' && store.getters.admin.length <= 0) next({
+  if (to.name !== 'Login' && !store.getters.admin.name) next({
     name: 'Login'
   })
   else {

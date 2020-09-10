@@ -11,7 +11,9 @@
               <p
                 class="h1"
                 style="color: #478419; font-weight: 700; margin-bottom: 0px; padding-bottom: 0px"
-              >BPNT Helper</p>
+              >
+                BPNT Helper
+              </p>
             </div>
           </div>
           <form @submit.prevent="onLogin">
@@ -22,7 +24,13 @@
                     <i class="fas fa-user-alt"></i>
                   </div>
                 </div>
-                <input type="text" class="form-control" placeholder="Username" v-model="username" />
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Username"
+                  v-model="username"
+                  required
+                />
               </div>
             </div>
             <div class="form-group">
@@ -37,12 +45,15 @@
                   class="form-control"
                   placeholder="Password"
                   v-model="password"
+                  required
                 />
               </div>
             </div>
             <!-- form-group// -->
             <div class="form-group">
-              <button type="submit" class="btn btn-primary btn-block">Login</button>
+              <button type="submit" class="btn btn-primary btn-block">
+                Login
+              </button>
             </div>
             <!-- form-group// -->
           </form>
@@ -54,7 +65,9 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+/*global Swal*/
+/*eslint no-undef: "error"*/
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   data() {
@@ -68,8 +81,19 @@ export default {
     async onLogin() {
       await this.login({ username: this.username, password: this.password });
 
-      this.$router.push({ path: "/" });
+      if (this.admin.name) {
+        this.$router.push({ path: "/" });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: "Username atau password salah.",
+        });
+
+        this.password = "";
+      }
     },
   },
+  computed: mapGetters(["admin"]),
 };
 </script>

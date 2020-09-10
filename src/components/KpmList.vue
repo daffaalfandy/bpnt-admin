@@ -1,14 +1,14 @@
 <template>
   <tr>
-    <td>{{index + 1}}</td>
-    <td>{{kpm.name}}</td>
-    <td>{{formatKks(kpm.kks)}}</td>
+    <td>{{ index + 1 }}</td>
+    <td>{{ kpm.name }}</td>
+    <td>{{ formatKks(kpm.kks) }}</td>
     <td>
-      <a @click.prevent="onClickDetail">
+      <a class="btn py-0 my-0 px-0 mx-0" @click.prevent="onClickDetail">
         <span class="text-blue fas fa-info-circle"></span>
       </a>
       &nbsp; &nbsp; &nbsp; / &nbsp; &nbsp; &nbsp;
-      <a @click.prevent="onClickDelete">
+      <a class="btn py-0 my-0 px-0 mx-0" @click.prevent="onClickDelete">
         <span class="fas fa-trash-alt text-red"></span>
       </a>
     </td>

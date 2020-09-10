@@ -38,7 +38,7 @@
             />
           </div>
           <div class="info">
-            <a href="#" class="d-block">Alexander Pierce</a>
+            <a href="#" class="d-block">{{ admin.name }}</a>
           </div>
         </div>
 
@@ -51,19 +51,37 @@
             data-accordion="false"
           >
             <li class="nav-item">
-              <router-link tag="a" active-class="active" exact to="/" class="nav-link">
+              <router-link
+                tag="a"
+                active-class="active"
+                exact
+                to="/"
+                class="nav-link"
+              >
                 <i class="nav-icon fas fa-cash-register mr-2"></i>
                 <p>Transaksi</p>
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link tag="a" active-class="active" exact to="/goods" class="nav-link">
+              <router-link
+                tag="a"
+                active-class="active"
+                exact
+                to="/goods"
+                class="nav-link"
+              >
                 <i class="nav-icon fas fa-th mr-2"></i>
                 <p>Data Barang</p>
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link tag="a" active-class="active" exact to="/kpm" class="nav-link">
+              <router-link
+                tag="a"
+                active-class="active"
+                exact
+                to="/kpm"
+                class="nav-link"
+              >
                 <i class="nav-icon fas fa-user-friends mr-2"></i>
                 <p>Data KPM</p>
               </router-link>
@@ -81,7 +99,13 @@
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link tag="a" active-class="active" exact to="/final-report" class="nav-link">
+              <router-link
+                tag="a"
+                active-class="active"
+                exact
+                to="/final-report"
+                class="nav-link"
+              >
                 <i class="nav-icon fas fa-receipt mr-2"></i>
                 <p>Laporan Akhir</p>
               </router-link>
@@ -99,10 +123,10 @@
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link tag="a" active-class="active" exact to="/logout" class="nav-link">
+              <a class="nav-link btn text-left" @click.prevent="onClickLogout">
                 <i class="nav-icon fas fa-sign-out-alt mr-2"></i>
                 <p>Keluar</p>
-              </router-link>
+              </a>
             </li>
           </ul>
         </nav>
@@ -122,9 +146,11 @@
       </div>
       <!-- /.content -->
     </div>
-    <footer class="text-right shadow pr-3 pb-2 pt-2 custom-footer" style="font-size: 0.9em;">
-      &#169; 2020, Daffa Alfandy. All rights
-      reserved.
+    <footer
+      class="text-right shadow pr-3 pb-2 pt-2 custom-footer"
+      style="font-size: 0.9em;"
+    >
+      &#169; 2020, Daffa Alfandy. All rights reserved.
       <a
         href="https://www.linkedin.com/in/daffa-alfandy-818187199/"
         class="mx-2"
@@ -133,10 +159,43 @@
       >
         <i class="fab fa-linkedin"></i>
       </a>
-      <a href="https://github.com/daffaalfandy" style="color: #343A40" target="_blank" class="mx-2">
+      <a
+        href="https://github.com/daffaalfandy"
+        style="color: #343A40"
+        target="_blank"
+        class="mx-2"
+      >
         <i class="fab fa-github"></i>
       </a>
     </footer>
     <!-- /.content-wrapper -->
   </div>
 </template>
+
+<script>
+/*global Swal*/
+/*eslint no-undef: "error"*/
+import { mapGetters } from "vuex"; //eslint-disable-line no-undef
+
+export default {
+  methods: {
+    onClickLogout() {
+      Swal.fire({
+        title: "Logout?",
+        text: "Apakah anda ingin mengakhiri sesi ini?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya",
+        cancelButtonText: "Tidak",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$router.replace({ path: "/logout" });
+        }
+      });
+    },
+  },
+  computed: mapGetters(["admin"]),
+};
+</script>

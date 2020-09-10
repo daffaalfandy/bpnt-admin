@@ -24,7 +24,10 @@ const actions = {
 }
 
 const mutations = {
-    loginAdmin: (state, payload) => (state.admin = payload)
+    loginAdmin: (state, payload) => {
+        state.admin = payload
+    },
+    logoutAdmin: (state) => state.admin = []
 }
 
 export default {
