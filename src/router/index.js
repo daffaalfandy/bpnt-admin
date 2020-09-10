@@ -10,12 +10,9 @@ import FinalReport from '../views/FinalReport'
 import IncomeStatement from '../views/IncomeStatement'
 import Login from '../Login'
 import Dash from '../Dash'
+import store from '../store'
 
 window.Vue = Vue
-
-let isAuthenticated = false
-
-
 
 Vue.use(VueRouter)
 
@@ -78,10 +75,12 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.name !== 'Login' && !isAuthenticated) next({
+  if (to.name !== 'Login' && store.getters.admin.length <= 0) next({
     name: 'Login'
   })
-  else next()
+  else {
+    next()
+  }
 })
 
 export default router

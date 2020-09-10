@@ -14,7 +14,7 @@
               >BPNT Helper</p>
             </div>
           </div>
-          <form>
+          <form @submit.prevent="onLogin">
             <div class="form-group">
               <div class="input-group">
                 <div class="input-group-prepend">
@@ -54,12 +54,22 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   data() {
     return {
       username: "",
       password: "",
     };
+  },
+  methods: {
+    ...mapActions(["login"]),
+    async onLogin() {
+      await this.login({ username: this.username, password: this.password });
+
+      this.$router.push({ path: "/" });
+    },
   },
 };
 </script>
