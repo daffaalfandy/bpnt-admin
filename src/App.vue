@@ -117,12 +117,26 @@
       <div class="content">
         <div class="container-fluid">
           <router-view></router-view>
-          <!-- <vue-progress-bar></vue-progress-bar> -->
         </div>
         <!-- /.container-fluid -->
       </div>
       <!-- /.content -->
     </div>
+    <footer class="text-right shadow pr-3 pb-2 pt-2 custom-footer" style="font-size: 0.9em;">
+      &#169; 2020, Daffa Alfandy. All rights
+      reserved.
+      <a
+        href="https://www.linkedin.com/in/daffa-alfandy-818187199/"
+        class="mx-2"
+        target="_blank"
+        style="color: #343A40"
+      >
+        <i class="fab fa-linkedin"></i>
+      </a>
+      <a href="https://github.com/daffaalfandy" style="color: #343A40" target="_blank" class="mx-2">
+        <i class="fab fa-github"></i>
+      </a>
+    </footer>
     <!-- /.content-wrapper -->
   </div>
 </template>
