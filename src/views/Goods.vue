@@ -117,7 +117,6 @@ export default {
     },
     async getGoods() {
       await this.fetchGoods({ month: this.month, year: this.year });
-      document.getElementById("btn-add-item").disabled = false;
     },
     getMonth() {
       const currentMonthNumber = date.getMonth();
@@ -137,7 +136,6 @@ export default {
     this.inventoryLoad();
 
     if (this.month !== "" && this.year !== "") {
-      document.getElementById("btn-add-item").disabled = false;
       await this.fetchGoods({ month: this.month, year: this.year });
     } else {
       document.getElementById("btn-add-item").disabled = true;

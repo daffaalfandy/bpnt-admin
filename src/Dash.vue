@@ -83,7 +83,7 @@
                 class="nav-link"
               >
                 <i class="nav-icon fas fa-th mr-2"></i>
-                <p>Data Barang</p>
+                <p>Persediaan Barang</p>
               </router-link>
             </li>
             <li class="nav-item">

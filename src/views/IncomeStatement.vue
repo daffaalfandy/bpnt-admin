@@ -4,9 +4,10 @@
       <div class="card-header">
         <div class="row">
           <h3 class="col-12 mx-auto text-center">Laporan Laba Rugi</h3>
-          <small
-            class="text-center text-secondary col-12 my-auto"
-          >*Silahkan gunakan laptop atau komputer untuk menyimpan dalam bentuk PDF*</small>
+          <small class="text-center text-secondary col-12 my-auto"
+            >*Silahkan gunakan laptop atau komputer untuk menyimpan dalam bentuk
+            PDF*</small
+          >
         </div>
       </div>
       <div class="card-body my-auto">
@@ -30,7 +31,9 @@
               v-model="datepick.year"
             />
             <datalist id="year-list"></datalist>
-            <button class="btn btn-primary px-4" @click.prevent="onClickChoose">Pilih</button>
+            <button class="btn btn-primary px-4" @click.prevent="onClickChoose">
+              Pilih
+            </button>
           </div>
         </div>
         <div class="container mb-5 mt-5 row mx-auto">
@@ -41,7 +44,9 @@
               @click="onClickWatchPDF"
               id="watch-report-btn"
               disabled
-            >Lihat Laporan</button>
+            >
+              Lihat Laporan
+            </button>
           </div>
           <div class="col-xl-4 col-md-6 export-to-pdf">
             <button
@@ -49,7 +54,9 @@
               @click="onClickSavePDF"
               id="save-pdf-btn"
               disabled
-            >Simpan ke PDF</button>
+            >
+              Simpan ke PDF
+            </button>
           </div>
           <div class="col-xl-2"></div>
         </div>
@@ -126,11 +133,15 @@ export default {
             this.datepick.year
           }`
         );
+
+      globalSum = 0;
     },
     onClickWatchPDF() {
       pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
       pdfMake.createPdf(this.createDocDefinition()).open();
+
+      globalSum = 0;
     },
     createDocDefinition() {
       return {
@@ -191,7 +202,7 @@ export default {
               bold: true,
             },
             {
-              text: "TOTAL",
+              text: "SUB TOTAL",
               style: "tableHeader",
               alignment: "center",
               bold: true,
@@ -230,7 +241,7 @@ export default {
               bold: true,
             },
             {
-              text: "TOTAL",
+              text: "SUB TOTAL",
               style: "tableHeader",
               alignment: "center",
               bold: true,
@@ -341,7 +352,7 @@ export default {
               text: `Rp${row.buyPrice.toLocaleString("id-ID")}`,
               alignment: "right",
             });
-          } else if (column.text == "TOTAL") {
+          } else if (column.text == "SUB TOTAL") {
             dataRow.push({
               text: `Rp${sum.toLocaleString("id-ID")}`,
               alignment: "right",
@@ -385,9 +396,10 @@ export default {
   },
   mounted() {
     this.inventoryLoad();
+    globalSum = 0;
   },
   watch: {
-    dataReady: function () {
+    dataReady: function() {
       if (this.dataReady) {
         document.getElementById("watch-report-btn").disabled = false;
         document.getElementById("save-pdf-btn").disabled = false;
