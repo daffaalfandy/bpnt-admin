@@ -5,7 +5,9 @@
         <div class="row">
           <div class="col-lg-10 col-12 mx-auto">
             <div class="row">
-              <h3 class="text-center col-12 my-auto">Riwayat Transaksi / Form Kontrol</h3>
+              <h3 class="text-center col-12 my-auto">
+                Riwayat Transaksi Penjualan / Form Kontrol
+              </h3>
               <small class="text-center text-secondary col-12 my-auto">
                 *Silahkan gunakan laptop atau komputer untuk menyimpan dalam
                 bentuk PDF*
@@ -37,18 +39,21 @@
               class="btn btn-primary mr-1"
               style="font-size: 0.9em"
               @click.prevent="onClickDate"
-            >Berdasarkan Tanggal</button>
+            >
+              Berdasarkan Tanggal
+            </button>
             <button
               class="btn btn-primary"
               style="font-size: 0.9em"
               @click.prevent="onClickMonth"
-            >Berdasarkan Bulan</button>
+            >
+              Berdasarkan Bulan
+            </button>
           </div>
         </div>
         <div class="container">
           <small class="text-left text-secondary my-auto">
-            *Silahkan simpan dalam bentuk PDF untuk detail lebih
-            lengkap*
+            *Silahkan simpan dalam bentuk PDF untuk detail lebih lengkap*
           </small>
           <table class="main-table mt-2">
             <thead>
@@ -60,7 +65,10 @@
               </tr>
             </thead>
             <tbody v-if="datepick !== null">
-              <tr v-for="(transaction, index) in pageOfItems" :key="transaction._id">
+              <tr
+                v-for="(transaction, index) in pageOfItems"
+                :key="transaction._id"
+              >
                 <td>{{ index + 1 }}</td>
                 <td>{{ formatKks(transaction.kpm.kks) }}</td>
                 <td>

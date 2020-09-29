@@ -7,19 +7,21 @@ const url = `${API_LOCATION}/goods`;
 
 const state = {
   goods: [],
+  goodsTransaction: [],
+  monthYear: {}
 };
 
 const getters = {
   allGoods: (state) => state.goods,
+  goodsTransaction: (state) => state.goodsTransaction,
+  monthYear: (state) => state.monthYear
 };
 
 const actions = {
   async addGoods({
-    commit
+    commit // eslint-disable-line no-unused-vars
   }, payload) {
-    const response = await axios.post(`${url}`, payload);
-
-    commit("addGoods", response.data);
+    await axios.post(`${url}`, payload);
   },
 
   async fetchGoods({
@@ -30,6 +32,16 @@ const actions = {
     );
 
     commit("setGoods", response.data);
+  },
+
+  async fetchGoodsTransaction({
+    commit
+  }, payload) {
+    const response = await axios.get(
+      `${url}/transaction?m=${payload.month}&y=${payload.year}`
+    );
+
+    commit("setGoodsTransaction", response.data)
   },
 
   async deleteGoods({
@@ -44,19 +56,10 @@ const actions = {
     commit // eslint-disable-line no-unused-vars
   }, payload) {
     await axios.put(`${url}/${payload._id}`, payload);
-
-    commit("updateGood", payload);
   },
 };
 
 const mutations = {
-  addGoods: (state, payload) => state.goods.goods.unshift(payload.goods),
-  updateGood: (state, payload) => {
-    const index = state.goods.goods.findIndex(
-      (good) => good._id == payload._id
-    );
-    state.goods.goods.splice(index, 1, payload);
-  },
   setGoods: (state, payload) => (state.goods = payload),
   deleteGoods: (state, payload) => {
     const index = state.goods.goods.findIndex(
@@ -64,6 +67,8 @@ const mutations = {
     );
     state.goods.goods.splice(index, 1);
   },
+  setGoodsTransaction: (state, payload) => (state.goodsTransaction = payload),
+  setMonthYear: (state, payload) => state.monthYear = payload
 };
 
 export default {

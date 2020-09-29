@@ -8,6 +8,8 @@ import KpmDetail from '../views/KpmDetail'
 import HistoryTransaction from '../views/HistoryTransaction'
 import FinalReport from '../views/FinalReport'
 import IncomeStatement from '../views/IncomeStatement'
+import Purchase from '../views/Purchase'
+import PurchaseTransaction from '../views/PurchaseTransaction'
 import Login from '../Login'
 import Dash from '../Dash'
 import store from '../store'
@@ -45,6 +47,22 @@ const routes = [{
         beforeEnter: (to, from, next) => {
           if (from.name !== "Transaction") next({
             name: "Transaction"
+          })
+          else next()
+        }
+      },
+      {
+        path: 'purchase',
+        name: "Purchase",
+        component: Purchase,
+      },
+      {
+        path: 'purchase-transaction',
+        name: "Purchase Transaction",
+        component: PurchaseTransaction,
+        beforeEnter: (to, from, next) => {
+          if (from.name !== "Purchase") next({
+            name: "Purchase"
           })
           else next()
         }

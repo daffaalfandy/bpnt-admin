@@ -21,7 +21,7 @@
           src="./assets/images/icon.png"
           alt="AdminLTE Logo"
           class="brand-image img-circle elevation-3"
-          style="opacity: .8"
+          style="opacity: 0.8"
         />
         <span class="brand-text font-weight-light">BPNT Helper</span>
       </a>
@@ -59,7 +59,19 @@
                 class="nav-link"
               >
                 <i class="nav-icon fas fa-cash-register mr-2"></i>
-                <p>Transaksi</p>
+                <p>Transaksi Penjualan</p>
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link
+                tag="a"
+                active-class="active"
+                exact
+                to="/purchase"
+                class="nav-link"
+              >
+                <i class="fas fa-shopping-cart mr-2 nav-icon"></i>
+                <p>Transaksi Pembelian</p>
               </router-link>
             </li>
             <li class="nav-item">
@@ -148,20 +160,20 @@
     </div>
     <footer
       class="text-right shadow pr-3 pb-2 pt-2 custom-footer"
-      style="font-size: 0.9em;"
+      style="font-size: 0.9em"
     >
       &#169; 2020, Daffa Alfandy. All rights reserved.
       <a
         href="https://www.linkedin.com/in/daffa-alfandy-818187199/"
         class="mx-2"
         target="_blank"
-        style="color: #343A40"
+        style="color: #343a40"
       >
         <i class="fab fa-linkedin"></i>
       </a>
       <a
         href="https://github.com/daffaalfandy"
-        style="color: #343A40"
+        style="color: #343a40"
         target="_blank"
         class="mx-2"
       >
