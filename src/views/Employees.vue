@@ -20,12 +20,35 @@
             <thead>
               <tr>
                 <th>No.</th>
+                <th>Username</th>
                 <th>Nama</th>
                 <th>Hak Akses</th>
-                <th>Password</th>
                 <th>Aksi</th>
               </tr>
             </thead>
+            <tbody v-if="dataReady">
+              <tr v-for="(admin, index) in admins" :key="admin._id">
+                <td>{{ index + 1 }}</td>
+                <td>{{ admin.username }}</td>
+                <td>{{ admin.name }}</td>
+                <td>{{ admin.role == 1 ? "Admin" : "Karyawan" }}</td>
+                <td>
+                  <a
+                    class="btn py-0 my-0 px-0 mx-0"
+                    @click.prevent="onClickEdit(admin)"
+                  >
+                    <span class="fas fa-edit text-blue"></span>
+                  </a>
+                  &nbsp; &nbsp; &nbsp; / &nbsp; &nbsp; &nbsp;
+                  <a
+                    class="btn py-0 my-0 px-0 mx-0"
+                    @click.prevent="onDeleteAdmin(admin._id)"
+                  >
+                    <span class="fas fa-trash-alt text-red"></span>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </div>
@@ -61,6 +84,16 @@
                   autofocus
                   type="text"
                   class="form-control"
+                  placeholder="Username Karyawan"
+                  v-model="form.username"
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  required
+                  autofocus
+                  type="text"
+                  class="form-control"
                   placeholder="Nama Karyawan"
                   v-model="form.name"
                 />
@@ -80,7 +113,7 @@
               </div>
               <div class="form-group">
                 <input
-                  required
+                  :required="!isEdit"
                   type="password"
                   class="form-control"
                   placeholder="Password"
@@ -109,8 +142,9 @@
 </template>
 
 <script>
-/*global $*/
+/*global Swal, $*/
 /*eslint no-undef: "error"*/
+import { mapGetters, mapActions } from "vuex"; //eslint-disable-line no-undef
 
 export default {
   data() {
@@ -118,15 +152,83 @@ export default {
       isEdit: false,
       form: {
         name: "",
+        username: "",
         role: "",
         password: "",
+        _id: "",
       },
+      dataReady: false,
     };
   },
   methods: {
+    ...mapActions(["registerAdmin", "editAdmin", "deleteAdmin", "fetchAdmins"]),
+    onSubmit() {
+      if (this.isEdit) {
+        this.editAdmin(this.form).then(() => {
+          Swal.fire("Success!", "Karyawan Berhasil Disunting", "success");
+          $("#exampleModal").modal("hide");
+          this.clearForm();
+        });
+      } else {
+        this.registerAdmin(this.form).then(() => {
+          Swal.fire("Success!", "Karyawan Berhasil Disunting", "success");
+          $("#exampleModal").modal("hide");
+          this.clearForm();
+        });
+      }
+    },
     onClickAdd() {
+      this.isEdit = false;
+      this.clearForm();
       $("#exampleModal").modal("show");
     },
+    onDeleteAdmin(_id) {
+      if (_id == this.admin._id) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Anda sedang menggunakan akun ini!",
+        });
+      } else {
+        Swal.fire({
+          title: "Apakah Anda yakin?",
+          text: "Anda tidak akan dapat mengulang ini!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Ya, hapus sekarang",
+          cancelButtonText: "Batal",
+        }).then(async (result) => {
+          if (result.value) {
+            this.deleteAdmin({ _id }).then(() =>
+              Swal.fire("Dihapus!", "Data berhasil dihapus.", "success")
+            );
+          }
+        });
+      }
+    },
+    onClickEdit(admin) {
+      this.isEdit = true;
+
+      this.form._id = admin._id;
+      this.form.name = admin.name;
+      this.form.username = admin.username;
+      this.form.role = admin.role;
+
+      $("#exampleModal").modal("show");
+    },
+    clearForm() {
+      this.form._id = "";
+      this.form.username = "";
+      this.form.name = "";
+      this.form.role = "";
+      this.form.password = "";
+    },
   },
+  mounted() {
+    this.fetchAdmins().then(() => (this.dataReady = true));
+  },
+  computed: mapGetters(["admins", "admin"]),
 };
 </script>
