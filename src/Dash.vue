@@ -91,18 +91,6 @@
                 tag="a"
                 active-class="active"
                 exact
-                to="/kpm"
-                class="nav-link"
-              >
-                <i class="nav-icon fas fa-user-friends mr-2"></i>
-                <p>Data KPM</p>
-              </router-link>
-            </li>
-            <li class="nav-item">
-              <router-link
-                tag="a"
-                active-class="active"
-                exact
                 to="/transaction-history"
                 class="nav-link"
               >
@@ -110,7 +98,7 @@
                 <p>Riwayat Transaksi</p>
               </router-link>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" v-if="admin.role === 1">
               <router-link
                 tag="a"
                 active-class="active"
@@ -122,7 +110,7 @@
                 <p>Laporan Akhir</p>
               </router-link>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" v-if="admin.role === 1">
               <router-link
                 tag="a"
                 active-class="active"
@@ -132,6 +120,30 @@
               >
                 <i class="nav-icon fas fa-coins mr-2"></i>
                 <p>Laba Rugi</p>
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link
+                tag="a"
+                active-class="active"
+                exact
+                to="/kpm"
+                class="nav-link"
+              >
+                <i class="nav-icon fas fa-user-friends mr-2"></i>
+                <p>Data KPM</p>
+              </router-link>
+            </li>
+            <li class="nav-item" v-if="admin.role === 1">
+              <router-link
+                tag="a"
+                active-class="active"
+                exact
+                to="/employees"
+                class="nav-link"
+              >
+                <i class="fas fa-users-cog nav-icon mr-2"></i>
+                <p>Data Karyawan</p>
               </router-link>
             </li>
             <li class="nav-item">

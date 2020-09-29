@@ -10,6 +10,7 @@ import FinalReport from '../views/FinalReport'
 import IncomeStatement from '../views/IncomeStatement'
 import Purchase from '../views/Purchase'
 import PurchaseTransaction from '../views/PurchaseTransaction'
+import Employees from '../views/Employees'
 import Login from '../Login'
 import Dash from '../Dash'
 import store from '../store'
@@ -46,6 +47,17 @@ const routes = [{
         component: MainTransaction,
         beforeEnter: (to, from, next) => {
           if (from.name !== "Transaction") next({
+            name: "Transaction"
+          })
+          else next()
+        }
+      },
+      {
+        path: 'employees',
+        name: 'Employees',
+        component: Employees,
+        beforeEnter: (to, from, next) => {
+          if (store.getters.admin.role !== 1) next({
             name: "Transaction"
           })
           else next()
@@ -96,12 +108,24 @@ const routes = [{
       {
         path: 'final-report',
         name: "Final Report",
-        component: FinalReport
+        component: FinalReport,
+        beforeEnter: (to, from, next) => {
+          if (store.getters.admin.role !== 1) next({
+            name: "Transaction"
+          })
+          else next()
+        }
       },
       {
         path: 'income-statement',
         name: "Income Statement",
-        component: IncomeStatement
+        component: IncomeStatement,
+        beforeEnter: (to, from, next) => {
+          if (store.getters.admin.role !== 1) next({
+            name: "Transaction"
+          })
+          else next()
+        }
       },
       {
         path: 'logout',
