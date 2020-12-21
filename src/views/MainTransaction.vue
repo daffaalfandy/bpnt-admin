@@ -1,13 +1,20 @@
 <template>
   <div class="container-fluid">
     <div class="card mt-4 shadow text-center">
-      <h3
-        class="card-header text-center"
-        id="month-year"
-      >Transaksi BPNT, {{datepick.date}} {{datepick.month}} {{datepick.year}}</h3>
+      <h3 class="card-header text-center" id="month-year">
+        Transaksi BPNT, {{ datepick.date }} {{ datepick.month }}
+        {{ datepick.year }}
+      </h3>
       <div class="card-body">
         <div class="container">
-          <span class="h5">Nama: {{getKpm.kpm.name}} || No. KKS: {{formatKks(getKpm.kpm.kks)}}</span>
+          <span class="h5"
+            >Nama: {{ getKpm.kpm.name }} || No. KKS:
+            {{ formatKks(getKpm.kpm.kks) }}</span
+          >
+          <p class="text-center">
+            {{ getKpm.kpm.hamlet }} {{ getKpm.kpm.rt }},
+            {{ getKpm.kpm.village }} {{ getKpm.kpm.subDistrict }}
+          </p>
           <table class="main-table mt-4">
             <thead>
               <tr>
@@ -30,17 +37,28 @@
               </template>
             </tbody>
             <tfoot
-              style="border-top-style: solid; border-top-width: 2.5px; border-top-color:  rgba(128, 128, 128, 0.1);"
+              style="
+                border-top-style: solid;
+                border-top-width: 2.5px;
+                border-top-color: rgba(128, 128, 128, 0.1);
+              "
             >
               <tr>
                 <td colspan="5" class="text-right">Total Harga:</td>
-                <td class="text-left">Rp{{sumOfPrice.toLocaleString('id-ID')}}</td>
+                <td class="text-left">
+                  Rp{{ sumOfPrice.toLocaleString("id-ID") }}
+                </td>
               </tr>
             </tfoot>
           </table>
         </div>
         <div class="container">
-          <button class="btn btn-primary float-right px-4 mt-2" @click.prevent="onBuyClicked">Beli</button>
+          <button
+            class="btn btn-primary float-right px-4 mt-2"
+            @click.prevent="onBuyClicked"
+          >
+            Beli
+          </button>
         </div>
       </div>
     </div>

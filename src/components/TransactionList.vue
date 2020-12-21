@@ -16,7 +16,6 @@
           class="pl-ns-value"
           v-model="buyQty"
           maxlength="2"
-          disabled
         />
         <span class="ns-btn">
           <a data-dir="up" @click.prevent="btnPlus">
