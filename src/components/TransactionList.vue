@@ -16,6 +16,7 @@
           class="pl-ns-value"
           v-model="buyQty"
           maxlength="2"
+          @change="onChangeInput"
         />
         <span class="ns-btn">
           <a data-dir="up" @click.prevent="btnPlus">
@@ -44,19 +45,22 @@ export default {
     index: Number,
   },
   methods: {
-    ...mapMutations(["updateCart"]),
+    ...mapMutations(["updateCart", "updateSumOfPrice"]),
+    onChangeInput() {
+      EventBus.$emit("change-value");
+    },
     btnMinus() {
       if (this.buyQty > 0) {
         this.buyQty--;
         EventBus.$emit("change-value");
-        this.$emit("changeSumValue", -this.good.sellPrice);
+        // this.$emit("changeSumValue", -this.good.sellPrice);
       }
     },
     btnPlus() {
       if (this.buyQty < this.good.stock) {
         this.buyQty++;
         EventBus.$emit("change-value");
-        this.$emit("changeSumValue", this.good.sellPrice);
+        // this.$emit("changeSumValue", this.good.sellPrice);
       }
     },
     onChangeValue: function() {
@@ -66,6 +70,10 @@ export default {
   mounted() {
     EventBus.$on("change-value", () => {
       this.onChangeValue();
+    });
+
+    EventBus.$on("sum-clicked", () => {
+      this.updateSumOfPrice(this.sumOfPrice);
     });
 
     EventBus.$on("checkout-clicked", () => {
@@ -83,6 +91,7 @@ export default {
   },
   beforeDestroy() {
     EventBus.$off("checkout-clicked", this.listener);
+    EventBus.$off("sum-clicked", this.listener);
   },
 };
 </script>

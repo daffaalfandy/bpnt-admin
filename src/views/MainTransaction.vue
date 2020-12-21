@@ -32,7 +32,6 @@
                   :key="good._id"
                   :index="index"
                   :good="good"
-                  v-on:changeSumValue="onSumChange"
                 ></transaction-list>
               </template>
             </tbody>
@@ -44,7 +43,11 @@
               "
             >
               <tr>
-                <td colspan="5" class="text-right">Total Harga:</td>
+                <td colspan="5" class="text-right">
+                  <button class="btn btn-info" @click.prevent="onSumChange">
+                    Total Harga
+                  </button>
+                </td>
                 <td class="text-left">
                   Rp{{ sumOfPrice.toLocaleString("id-ID") }}
                 </td>
@@ -76,17 +79,18 @@ export default {
     "transaction-list": TransactionList,
   },
   data() {
-    return {
-      sumOfPrice: 0,
-    };
+    return {};
   },
   methods: {
     ...mapActions(["newTransaction"]),
-    ...mapMutations(["emptyCart"]),
-    onSumChange(value) {
-      this.sumOfPrice += value;
+    ...mapMutations(["emptyCart", "emptySumOfPrice"]),
+    onSumChange() {
+      this.emptySumOfPrice();
+      EventBus.$emit("sum-clicked");
     },
     onBuyClicked() {
+      this.emptySumOfPrice();
+      EventBus.$emit("sum-clicked");
       Swal.fire({
         title: "Selesaikan pembelian?",
         text: "Anda tidak bisa merubah setelah ini!",
@@ -112,6 +116,7 @@ export default {
 
           this.newTransaction(payload).then(() => {
             this.emptyCart();
+            this.emptySumOfPrice();
             Swal.fire("Sukses!", "Transaksi selesai", "success");
             this.$router.push({ path: "/" });
           });
@@ -119,7 +124,15 @@ export default {
       });
     },
   },
-  mounted() {},
-  computed: mapGetters(["datepick", "getKpm", "allGoods", "cart"]),
+  mounted() {
+    // this.sumOfPrice = this.storeSum
+  },
+  computed: mapGetters([
+    "datepick",
+    "getKpm",
+    "allGoods",
+    "cart",
+    "sumOfPrice",
+  ]),
 };
 </script>
